@@ -1,14 +1,14 @@
 #!/usr/bin/env zsh
 
 # install Zsh Plugin Manager
-ZPM_ROOT="$HOME/.config/zsh/zpm"
+ZPM_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/@zpm"
 if [[ ! -f "$ZPM_ROOT/zpm.zsh" ]]; then
   git clone --recursive https://github.com/zpm-zsh/zpm "$ZPM_ROOT"
 fi
 source "$ZPM_ROOT/zpm.zsh"
 
 # load /etc/profile via sh emulation
-emulate sh -c 'source /etc/profile'
+emulate sh -c 'source /etc/profile' || true
 
 ### Tmux
 export TMUX_AUTOSTART=false
@@ -41,6 +41,7 @@ zpm load                      \
   zpm-zsh/dot,async           \
   zpm-zsh/undollar,async      \
   zpm-zsh/bookmarks,async     \
+  zpm-zsh/zpm-info            \
   voronkovich/gitignore.plugin.zsh,async     \
   zpm-zsh/autoenv,async                      \
   mdumitru/fancy-ctrl-z,async                \
@@ -66,6 +67,5 @@ setopt hist_reduce_blanks
 setopt hist_save_no_dups
 setopt hist_verify
 
-source ~/.zshrc.local 2>/dev/null
-
+[ ! -f ~/.zshrc.local ] || source ~/.zshrc.local 2>/dev/null
 

@@ -14,3 +14,7 @@ export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 # unfortunately, nvim plugins require nodejs + npm :| 
 apt-get install -y nodejs npm
 
+# install ripgrep
+curl -LO https://github.com/BurntSushi/ripgrep/releases/download/14.1.1/ripgrep_14.1.1-1_amd64.deb
+dpkg -i ripgrep_14.1.1-1_amd64.deb
+

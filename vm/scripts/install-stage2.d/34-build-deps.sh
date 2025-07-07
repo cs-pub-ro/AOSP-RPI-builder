@@ -4,7 +4,7 @@
 
 # terminal tools
 apt-get install -y tmux lzma xz-utils moreutils expect lsof jq vim less \
-	rsync zsh
+	rsync zsh parallel
 
 # build dependencies
 apt-get install -y \

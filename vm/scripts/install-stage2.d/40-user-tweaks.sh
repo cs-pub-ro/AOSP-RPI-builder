@@ -6,6 +6,8 @@ SRC="$(realpath "$(sh_get_script_path)/..")"
 
 # copy default files to /etc/skel
 rsync -a --chown=root:root --chmod=755 "$SRC/etc/skel/" "/etc/skel/"
+# clone fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git /etc/skel/.fzf/
 
 # this will be ran as the `student` & `root` users
 function _install_home_config() {
@@ -13,6 +15,8 @@ function _install_home_config() {
 
 	# copy skel over (since user was created previous to installing files)
 	rsync -a --chmod=750 "/etc/skel/" "$HOME/"
+	# install fzf
+	yes | "$HOME/.fzf/install"
 
 	# run zsh to install plugins
 	zsh -i -c 'source ~/.zshrc; exit 0'
