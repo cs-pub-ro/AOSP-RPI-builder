@@ -1,0 +1,13 @@
+[Unit]
+Description=Ensure build env for user %I
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/builder-mkmountns.sh %i
+ExecStart=/usr/local/bin/builder-mkoverlay.sh %i
+ExecStop=/usr/local/bin/builder-mkoverlay.sh -u %i
+ExecStop=/usr/local/bin/builder-mkmountns.sh --rm %i
+
+[Install]
+WantedBy=multi-user.target
