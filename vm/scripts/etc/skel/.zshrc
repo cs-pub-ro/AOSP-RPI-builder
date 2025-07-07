@@ -7,6 +7,9 @@ if [[ ! -f "$ZPM_ROOT/zpm.zsh" ]]; then
 fi
 source "$ZPM_ROOT/zpm.zsh"
 
+# load /etc/profile via sh emulation
+emulate sh -c 'source /etc/profile'
+
 ### Tmux
 export TMUX_AUTOSTART=false
 # zpm if ssh load zpm-zsh/tmux
@@ -64,4 +67,5 @@ setopt hist_save_no_dups
 setopt hist_verify
 
 source ~/.zshrc.local 2>/dev/null
+
 
