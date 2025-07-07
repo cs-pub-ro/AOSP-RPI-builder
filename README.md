@@ -114,19 +114,33 @@ make bootimage systemimage vendorimage -j$(nproc --ignore=2)
 After the base build is over, here's how to make an user-specific overlay
 (e.g. for `student`):
 
+The easy way, autostarted with VM (replace with actual username):
 ```sh
-sudo builder-mkmountns.sh student
+STUDENT_USER=student
+systemctl enable build-env-for@$STUDENT_USER
+systemctl restart build-env-for@$STUDENT_USER
+# this should do the required setup
+```
+
+Or the manual way:
+```sh
+sudo builder-mkmountns.sh $STUDENT_USER
 # work with the base layer, NOT an upper overlay:
-sudo builder-mkoverlay.sh student
-# as student, enter the new mount namespace:
-su --login student
-sudo builder-enter.sh
+sudo builder-mkoverlay.sh $STUDENT_USER
+```
+
+As student, enter the new mount namespace and build AOSP:
+```sh
+# first, must enter the namespace (with tmux, recommended)
+sudo builder-enter.sh tmux
 # android should be already built from previous step!
 ls -l /build
 # e.g., further change the build
 . build/envsetup.sh
 lunch aosp_rpi5-bp2a-userdebug
+# change something
 vim device/brcm/rpi5/BoardConfig.mk
-make vendorimage -j$(nproc --ignore=2)
+# rebuild
+make bootimage systemimage vendorimage -j$(nproc --ignore=2)
 ```
 

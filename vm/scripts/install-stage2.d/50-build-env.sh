@@ -6,6 +6,15 @@ SRC="$(realpath "$(sh_get_script_path)/..")"
 BUILDERS=builders
 getent group "$BUILDERS" >/dev/null 2>&1 || groupadd -g "2999" "$BUILDERS"
 
+# setup sudoers
+SUDO_BINARIES=("/usr/local/bin/builder-enter.sh")
+echo -n > /etc/sudoers.d/builders
+for bin in "${SUDO_BINARIES[@]}"; do
+	echo "%$BUILDERS ALL=(root) NOPASSWD: $bin" >> /etc/sudoers.d/builders
+done
+# FIXME: rpiX-mkimg.sh requires sudo for too many tools...
+echo "%$BUILDERS ALL=(root) NOPASSWD: ALL" >> /etc/sudoers.d/builders
+
 BDIR="/home/_aosp_build"
 BUILD_MOUNT=/build
 
