@@ -19,6 +19,9 @@ apt-get install -y \
     ncurses-dev libgucharmap-2-90-dev bzip2 expat gpgv2 \
     bc time file bsdmainutils
 
+# wireguard
+apt-get install -y wireguard-tools
+
 apt-get clean
 
 if [[ -n "$VM_FULL_UPGRADE" ]]; then
