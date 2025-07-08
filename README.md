@@ -77,36 +77,22 @@ they do not conflict with eachother).
 
 ### Base Layer (as `admin`)
 
-First, we must create a mount namespace for `admin` and mount the base layer 
-at `/build`:
+To build the base AOSP images (main + car), simply run this script (inside tmux
+recommended):
+```sh
+whoami  # admin, right ???
+sudo builder-init-all.sh
+```
+
+Advanced usage: to manually create a mount namespace for `admin` and 
+mount the base layer at `/build`:
 
 ```sh
-whoami
-# admin, right ???
 sudo builder-mkmountns.sh
 # work with the base layer, NOT an upper overlay:
 sudo builder-mkoverlay.sh --root
 # enter the new mount namespace:
 sudo builder-enter.sh
-```
-
-Next, navigate to the `/build` directory and follow the AOSP build instructions
-for your preferred distribution
-(you might wish to do these steps inside a `tmux` session...):
-
-```sh
-cd /build
-repo init -u https://android.googlesource.com/platform/manifest -b android-16.0.0_r1 --depth=1
-curl -o .repo/local_manifests/manifest_brcm_rpi.xml -L https://raw.githubusercontent.com/raspberry-vanilla/android_local_manifest/android-16.0/manifest_brcm_rpi.xml --create-dirs
-curl -o .repo/local_manifests/remove_projects.xml -L https://raw.githubusercontent.com/raspberry-vanilla/android_local_manifest/android-16.0/remove_projects.xml
-# minimize the downloaded size
-repo sync -c --no-clone-bundle
-# now, each time you wish to work with AOSP you must load its environment:
-. build/envsetup.sh
-# if starting with a pre-defined configuration:
-lunch aosp_rpi5-bp2a-userdebug
-# finally, start the build (but keep some cores for other services)
-make bootimage systemimage vendorimage -j$(nproc --ignore=2)
 ```
 
 ### Overlay for each `student` user
