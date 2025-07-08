@@ -7,9 +7,11 @@ SRC="$(realpath "$(sh_get_script_path)/..")"
 # copy default files to /etc/skel
 rsync -a --chown=root:root --chmod=755 "$SRC/etc/skel/" "/etc/skel/"
 # clone fzf
-git clone --depth 1 https://github.com/junegunn/fzf.git /etc/skel/.fzf/
+if [[ ! -d /etc/skel/.fzf/.git ]]; then
+	git clone --depth 1 https://github.com/junegunn/fzf.git /etc/skel/.fzf/
+fi
 
-# this will be ran as the `student` & `root` users
+# this will be ran with individual user privileges
 function _install_home_config() {
 	set -e
 
@@ -20,12 +22,16 @@ function _install_home_config() {
 
 	# run zsh to install plugins
 	zsh -i -c 'source ~/.zshrc; exit 0'
+
+	# set git identities
+	git config --global user.email "$USER@armbuilder.local"
+	git config --global user.name "${USER}_builder"
 }
 
 _exported_script="$(declare -p SRC); $(declare -f _install_home_config)"
-echo "$_exported_script; _install_home_config" | su -c bash student
-echo "$_exported_script; _install_home_config" | su -c bash root
 
-chsh -s /usr/bin/zsh "root"
-chsh -s /usr/bin/zsh "student"
+for u in student admin root; do
+	echo "$_exported_script; _install_home_config" | su -c bash "$u"
+	chsh -s /usr/bin/zsh "$u"
+done
 
