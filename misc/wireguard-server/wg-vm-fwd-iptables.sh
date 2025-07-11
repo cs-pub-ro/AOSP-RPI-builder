@@ -16,6 +16,10 @@ iptables -I FORWARD -p tcp --dport 22 -d "$WG_NET" -j ACCEPT
 iptables -I FORWARD -p tcp --sport 22 -s "$WG_NET" -j ACCEPT
 iptables -t nat -I POSTROUTING -d "$WG_NET" -j MASQUERADE
 
+# we also need to so SNAT...
+iptables -t nat -D POSTROUTING 1 -d 10.13.14.0/24 -j MASQUERADE
+iptables -t nat -I POSTROUTING 1 -d 10.13.14.0/24 -j MASQUERADE
+
 # parse configuration file and return all peers' VM_IDX
 while IFS="" read -r peer || [ -n "$peer" ]; do
 	mapfile -td/ pf < <(echo -n "$peer")
