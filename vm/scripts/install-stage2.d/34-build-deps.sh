@@ -19,6 +19,9 @@ apt-get install -y \
     ncurses-dev libgucharmap-2-90-dev bzip2 expat gpgv2 \
     bc time file bsdmainutils
 
+apt-get install -y libusb-1.0-0-dev libbz2-dev libzstd-dev pkg-config cmake \
+	libssl-dev g++ zlib1g-dev libtinyxml2-dev libgnutls28-dev
+
 # wireguard
 apt-get install -y wireguard-tools
 
