@@ -20,7 +20,7 @@ apt-get install -y \
     bc time file bsdmainutils
 
 apt-get install -y libusb-1.0-0-dev libbz2-dev libzstd-dev pkg-config cmake \
-	libssl-dev g++ zlib1g-dev libtinyxml2-dev libgnutls28-dev
+	libssl-dev g++ zlib1g-dev libtinyxml2-dev libgnutls28-dev kmod
 
 # wireguard
 apt-get install -y wireguard-tools
