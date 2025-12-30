@@ -28,6 +28,7 @@ cat << EOF > "$VM_CONFIG_FILE"
 [Interface]
 PrivateKey = ${VM_PRIVATE_KEY}
 Address = ${WG_VM_IP_ADDR}
+MTU = 1300
 
 [Peer]
 PublicKey = ${SERVER_PUBLIC_KEY}
@@ -48,7 +49,7 @@ cat << EOF
 [Peer]
 #VM_IDX=${VM_IDX}/${WG_VM_IP_ADDR}
 PublicKey = ${VM_PUBLIC_KEY}
-AllowedIPs = ${WG_VM_IP_ADDR}
+AllowedIPs = ${WG_VM_IP_ADDR%/24}/32
 PersistentKeepalive = 25
 EOF
 

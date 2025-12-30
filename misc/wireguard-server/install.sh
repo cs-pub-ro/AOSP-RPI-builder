@@ -25,6 +25,7 @@ if [[ ! -f "$SERVER_CONFIG_FILE" ]]; then
 PrivateKey = ${_WG_PRIV_KEY}
 Address = 10.13.14.254/24
 ListenPort = 51820
+MTU = 1300
 PostUp = $WG_POST_UP_SCRIPT
 PostDown = $WG_POST_UP_SCRIPT --rm
 

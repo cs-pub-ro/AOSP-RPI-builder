@@ -14,6 +14,8 @@ iptables -t nat -D POSTROUTING -d "$WG_NET" -j MASQUERADE &>/dev/null || true
 
 iptables -I FORWARD -p tcp --dport 22 -d "$WG_NET" -j ACCEPT
 iptables -I FORWARD -p tcp --sport 22 -s "$WG_NET" -j ACCEPT
+iptables -I FORWARD -p icmp -s "$WG_NET" -j ACCEPT
+iptables -I FORWARD -p icmp -d "$WG_NET" -j ACCEPT
 # we also need to so SNAT...
 iptables -t nat -I POSTROUTING -d "$WG_NET" -j MASQUERADE
 
