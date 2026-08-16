@@ -10,4 +10,3 @@ if [[ "$(hostname)" != "$NEW_HOSTNAME" ]]; then
 	sed -i "s/^127.0.1.1\s.*/127.0.1.1       $NEW_HOSTNAME/g"  /etc/hosts
 fi
 
-

@@ -23,7 +23,7 @@ vm-prefix = arm_builder_$(vm-ver)
 
 # Local VM rule
 # [re]build with `make main_clean main`
-$(call vm_new_layer_generic,main)
+$(call vm_new_layer_full_featured,main)
 main-name = $(vm-prefix)_main
 # always update scripts from framework (prevent re-building base on changes)
 # same as above, include scripts from framework, full layer + our own overrides
