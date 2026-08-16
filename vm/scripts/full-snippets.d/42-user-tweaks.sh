@@ -5,7 +5,6 @@
 VM_SRC="$(realpath "$(sh_get_script_path)/..")"
 
 # install dotfiles to /etc/skel/
-rsync -a --chown=root:root --chmod=755 "$VM_SRC/labvm-dotfiles/" "/etc/skel/"
 # emulate installation using XDG paths
 env HOME=/etc/skel/ XDG_CONFIG_HOME="/etc/skel/.config" \
 	XDG_DATA_HOME="/etc/skel/.local/share" \
@@ -14,10 +13,11 @@ env HOME=/etc/skel/ XDG_CONFIG_HOME="/etc/skel/.config" \
 	"$VM_SRC/labvm-dotfiles/install.sh"
 chmod 755 "/etc/skel" -R
 
-# clone fzf
-if [[ ! -d /etc/skel/.fzf/.git ]]; then
-	git clone --depth 1 https://github.com/junegunn/fzf.git /etc/skel/.fzf/
-fi
+# cleanup MOTD + add fastfetch
+for f in /etc/update-motd.d/*; do 
+	n=${f##*/}; [[ ${n%%-*} =~ ^[0-9]+$ ]] && (( ${n%%-*} < 96 )) && rm -v -- "$f"
+done
+rsync -a --chown=root:root --chmod=755 "$VM_SRC/etc/update-motd.d/" "/etc/update-motd.d/"
 
 # this will be ran with individual user privileges
 function _install_home_config() {

@@ -7,6 +7,11 @@ pkg_install nodejs npm
 # install ripgrep, fd-find and other goodies
 pkg_install ripgrep fd-find jq
 
+# fastfetch!
+arch=$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')
+wget "https://github.com/fastfetch-cli/fastfetch/releases/latest/download/fastfetch-linux-amd64.deb" -O /tmp/fastfetch-linux-amd64.deb
+dpkg -i /tmp/fastfetch-linux-amd64.deb
+
 # Install latest Neovim release
 wget -qO- https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz | \
 	tar -xz -C /usr/local --strip-components=1
