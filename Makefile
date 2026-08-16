@@ -25,6 +25,8 @@ vm-prefix = arm_builder_$(vm-ver)
 # [re]build with `make main_clean main`
 $(call vm_new_layer_full_featured,main)
 main-name = $(vm-prefix)_main
+# workaround for .git repos having readonly files (pack/*)
+main-pre-copy-cmd = rm -rf /opt/vm-scripts/labvm-dotfiles/.git
 # always update scripts from framework (prevent re-building base on changes)
 # same as above, include scripts from framework, full layer + our own overrides
 main-copy-scripts = $(abspath $(FRAMEWORK_DIR)/scripts)/
