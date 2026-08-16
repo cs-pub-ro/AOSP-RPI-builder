@@ -13,10 +13,12 @@ INIT_GOAL = main
 
 # user-definable base (used for testing)
 BASE ?= ubuntu
+UBUNTU_VERSION ?= 24
+
 $(call vm_new_base_$(BASE),base)
 
 # VM versioning & unified prefix scheme
-vm-ver = 2025
+vm-ver = 2026
 vm-prefix = arm_builder_$(vm-ver)
 
 # Local VM rule

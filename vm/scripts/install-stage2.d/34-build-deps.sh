@@ -14,9 +14,9 @@ apt-get install -y \
 	libxml2-utils xsltproc unzip fontconfig \
     libssl-dev liblz4-tool libmpc-dev \
 	coreutils dosfstools e2fsprogs fdisk kpartx mtools ninja-build \
-	pkg-config python3-pip rsync fakeroot libgmp-dev \
+	pkg-config python3-pip python3-venv rsync fakeroot libgmp-dev \
     cmake device-tree-compiler \
-    ncurses-dev libgucharmap-2-90-dev bzip2 expat gpgv2 \
+    ncurses-dev libgucharmap-2-90-dev bzip2 expat gpg \
     bc time file bsdmainutils
 
 apt-get install -y libusb-1.0-0-dev libbz2-dev libzstd-dev pkg-config cmake \

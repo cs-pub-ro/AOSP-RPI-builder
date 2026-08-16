@@ -2,9 +2,11 @@
 # Copy it as `config.local.mk` & modify to take effect.
 # (also check out framework/config.default.mk for all variables)
 
+# ISO images location
+BASE_ISO_DIR = $(HOME)/Downloads/iso
 
-# Ubuntu .iso image
-UBUNTU_22_ISO = $(HOME)/Downloads/ubuntu-22.04.5-live-server-amd64.iso
+# optional: change APT mirror 
+#BASE_UBUNTU_APT_MIRROR = http://mirrors.hosterion.ro/ubuntu/
 
 # E.g., move build output (VM destination) directory to an external drive
 #BUILD_DIR ?= /media/myssd/tmp/packer
