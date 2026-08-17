@@ -11,11 +11,12 @@ fi
 cd /build
 
 # download raspberry-vanilla manifests
-repo init -u https://android.googlesource.com/platform/manifest -b android-16.0.0_r1 --depth=1
-curl -o .repo/local_manifests/manifest_brcm_rpi.xml \
-	-L https://raw.githubusercontent.com/raspberry-vanilla/android_local_manifest/android-16.0/manifest_brcm_rpi.xml --create-dirs
-curl -o .repo/local_manifests/remove_projects.xml \
-	-L https://raw.githubusercontent.com/raspberry-vanilla/android_local_manifest/android-16.0/remove_projects.xml
+repo init -u https://android.googlesource.com/platform/manifest -b android-17.0.0_r1 --depth=1
+curl -o .repo/local_manifests/manifest_brcm_rpi.xml -L \
+	"https://raw.githubusercontent.com/raspberry-vanilla/android_local_manifest/android-17.0/manifest_brcm_rpi.xml" \
+	--create-dirs
+curl -o .repo/local_manifests/remove_projects.xml -L \
+	"https://raw.githubusercontent.com/raspberry-vanilla/android_local_manifest/android-17.0/remove_projects.xml"
 
 # minimize the downloaded size
 repo sync -c --no-clone-bundle
@@ -24,10 +25,10 @@ repo sync -c --no-clone-bundle
 source build/envsetup.sh
 
 # build Android Car first
-lunch aosp_rpi4_car-bp2a-userdebug
+lunch aosp_rpi5_car-cp2a-userdebug
 make bootimage systemimage vendorimage -j$(nproc --ignore=2)
 
 # afterwards, re-build & switch to Android Main
-lunch aosp_rpi5-bp2a-userdebug
+lunch aosp_rpi5-cp2a-userdebug
 make bootimage systemimage vendorimage -j$(nproc --ignore=2)
 
