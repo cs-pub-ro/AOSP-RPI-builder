@@ -3,6 +3,9 @@
 
 SRC="$(realpath "$(sh_get_script_path)/..")"
 
+# default android version to build
+ANDROID_VERSION=${ANDROID_VERSION:-17}
+
 BUILDERS=builders
 getent group "$BUILDERS" >/dev/null 2>&1 || groupadd -g "2999" "$BUILDERS"
 
@@ -27,6 +30,10 @@ chown "admin:$BUILDERS" "$BDIR" -R
 chmod 755 "$BDIR" -R
 # set it group-writable with sticky bit
 chmod 1775 "$BDIR/ns"
+
+mkdir -p /etc/aospi/
+rsync -a --chown=root:root "$SRC/etc/aospi/" /etc/aospi/
+ln -sf "/etc/aospi/android$ANDROID_VERSION.env" /etc/aospi/.env
 
 # install builder scripts
 rsync -a --chown=root:root --chmod=755 "$SRC/bin/" /usr/local/bin/

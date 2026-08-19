@@ -18,8 +18,6 @@ systemctl restart "$BUILDENV_SV"
 # this will be ran as the `$NAME` user
 function _install_home_config() {
 	set -e
-	# install fzf
-	yes | "$HOME/.fzf/install"
 	# run zsh to install plugins
 	zsh -i -c 'source ~/.zshrc; exit 0'
 
