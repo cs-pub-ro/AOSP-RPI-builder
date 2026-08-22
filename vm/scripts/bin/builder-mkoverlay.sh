@@ -36,6 +36,7 @@ UPPER_DIR="$BDIR/up/$NAME"
 WORK_DIR="$BDIR/work/$NAME"
 MOUNT_DIR=/build
 MNS="$BDIR/ns/$NAME"
+CHOWN_CHECK_DIR="$MOUNT_DIR/device"
 
 if [[ "$UMOUNT" == "1" ]]; then
 	nsenter --mount="$MNS" umount "$MOUNT_DIR"
@@ -58,7 +59,12 @@ if [[ "$AS_OVERLAY" == "1" ]]; then
 		echo "ERROR: mount namespace '$MNS' not found!" >&2; exit 1; }
 	nsenter --mount="$MNS" "${MOUNT_OVER[@]}"
 	echo "Preparing permissions..."
-	nsenter --mount="$MNS" "${CHOWN[@]}"
+	if [[ "$(nsenter --mount="$MNS" stat -c '%U:%G' "$CHOWN_CHECK_DIR")" == "$NAME:$BUILDERS" ]]; then
+		echo "Permissions already set, skipping chown..."
+	else
+		echo "Preparing permissions..."
+		nsenter --mount="$MNS" "${CHOWN[@]}"
+	fi
 else
 	# directly mount base dir (for admin/root to do initial build)
 	echo "Mounting base dir at $MOUNT_DIR [NS=$MNS]"
